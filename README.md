@@ -1,5 +1,5 @@
 # AutomicPack
-自动打包并上传蒲公英，基于fastlane、python的一种处理方式
+自动打包并上传蒲公英，基于shell的一种处理方式
 
 # 使用方法
 首先可以在你的项目中的info.plist文件中加入两个key，用来加入你所创建的蒲公英的apiKey和uerKey(不配置的话也没有问题，执行sh文件的时候会有提醒的)
