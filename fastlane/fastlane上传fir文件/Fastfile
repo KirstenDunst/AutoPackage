@@ -1,0 +1,48 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  lane :custom_lane do
+    # add actions here: https://docs.fastlane.tools/actions
+  end
+
+  desc "archive ipa"
+lane :archive do
+#打包的ipa存放路径
+outputDir = "./firim/ipa/#{Time.now.strftime('%y%m%d')}"
+#打包的ipa名称
+outputName = "MOFSPickerManager-#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}"
+gym(
+scheme: "QuickPushCRM", #改为你项目的scheme
+workspace: "QuickPushCRM.xcworkspace",  #如果项目使用CocoaPods需要加上
+configuration: "Release",
+output_directory: outputDir,
+output_name: outputName,
+include_bitcode: false,
+include_symbols: true,
+codesigning_identity: ENV["CODESIGNING_IDENTITY_TO_FIRIM"],
+silent: true,
+export_options: {
+method: "ad-hoc",  #根据具体情况定
+thinning: "<none>"
+}
+)
+firim(firim_api_token: "0da508d90bcb73f197b5d3fe93dcc9f9" app_changelog: "最新的版本更新内容上传文本信息填写") #上传到firim
+end
+
+end
