@@ -37,6 +37,7 @@ pip install gym
                     （sudo gem install gym -n /usr/local/bin）
                     
 
+两者不冲突，可以单纯使用python或者是fastlane两种方式均可
 fastlane环境安装：
 
 如果用的是mac自带的ruby，需要 sudo权限

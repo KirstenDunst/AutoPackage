@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>destination</key>
+	<string>export</string>
+	<key>method</key>
+	<string>app-store</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>tech.brainco.focusimprove</key>
+		<string>improve_appstore</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>063CC56D70176885434124FEFDF26C5745767C80</string>
+	<key>teamID</key>
+	<string>TG5E95RU8K</string>
+	<key>uploadBitcode</key>
+	<false/>
+	<key>uploadSymbols</key>
+	<true/>
+</dict>
+</plist>
