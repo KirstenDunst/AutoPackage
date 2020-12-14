@@ -1,4 +1,4 @@
-# AutomicPack
+# AutomicPackage
 自动打包并上传蒲公英，基于shell的一种处理方式
 
 # 使用方法
