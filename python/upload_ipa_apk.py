@@ -2,7 +2,7 @@
 @Author: Cao Shixin
 @Date: 2020-05-27 19:54:39
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-06 15:01:52
+LastEditTime: 2020-12-14 16:54:53
 @Description: 包上传工具
 @Email: cao_shixin@yahoo.com
 @Company: BrainCo
@@ -17,14 +17,14 @@ pugongying_ipa_download_url = 'https://www.pgyer.com/XXXXX'  # 蒲公英的APP�
 fir_ipa_download_url = 'http://d.firim.top/XXXXX'  # fir下载安装包路径地址
 
 # 蒲公英账号API_KEY
-API_KEY = 'XXXXXXXXXXXXXXXXXXX'
+API_KEY = 'X'
 
 # fir token
-FIR_API_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXX'
+FIR_API_TOKEN = 'X'
 
 # appstore
-DEVELOP_APPID = 'XXXXXXXXXXXXXXXXXXXXX'
-DEVELOP_APPID_SECRET = 'XXXXXXXXXXXXXXXXXXXXXXX'  # 注意这里的密码是授权码，并不是明文登陆密码
+DEVELOP_APPID = 'X'
+DEVELOP_APPID_SECRET = 'X'  # 注意这里的密码是授权码，并不是明文登陆密码
 
 
 class UploadIpaApk:
@@ -54,7 +54,7 @@ class UploadIpaApk:
                                 new=1,
                                 autoraise=True)
         else:
-            exit('包路径错误:' + package_path)
+            exit('\n=================包路径错误:' + package_path)
 
     @staticmethod
     def fir(package_path, description, app_name, app_version, app_build):
@@ -64,6 +64,8 @@ class UploadIpaApk:
         ：description： 本次更新描述信息
         """
         print("路径：" + package_path)
+        print('\n\n===========开始上传fir操作=app_name:%s app_version:%s========' %
+              (app_name, app_version))
         if package_path:
             # https://www.betaqr.com/docs 上报文档
             data = {
@@ -97,11 +99,11 @@ class UploadIpaApk:
                                     new=1,
                                     autoraise=True)
                 else:
-                    exit('fir上报ipa错误')
+                    exit('\n===============fir上报ipa错误===============')
             else:
-                exit('fir获取上报路径错误')
+                exit('\n================fir获取上报路径错误=================')
         else:
-            exit('包路径错误:' + package_path)
+            exit('\n====================包路径错误:' + package_path)
 
     @staticmethod
     def appstore(package_path):
@@ -109,8 +111,11 @@ class UploadIpaApk:
         上传appstore
         ：package_path：包路径
         """
-        os.system('xcrun altool --upload-app -f ' + package_path + ' -u ' +
-                  DEVELOP_APPID + ' -p ' + DEVELOP_APPID_SECRET)
+        if package_path:
+            os.system('xcrun altool --upload-app -f ' + package_path + ' -u ' +
+                      DEVELOP_APPID + ' -p ' + DEVELOP_APPID_SECRET)
+        else:
+            exit('\n====================包路径错误:' + package_path)
 
 
 if __name__ == '__main__':
