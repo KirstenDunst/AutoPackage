@@ -25,6 +25,7 @@ class UploadIpaApk:
         ：package_path：包文件路径地址（本地文件地址）
         ：description： 本次更新描述信息
         """
+        print("\n\n===========开始上传蒲公英操作===========")
         if package_path:
             # https://www.pgyer.com/doc/api 具体参数可以进去里面查看,
             url = 'https://www.pgyer.com/apiv2/app/upload'
@@ -50,7 +51,6 @@ class UploadIpaApk:
         ：package_path：包文件路径地址（本地文件地址）
         ：description： 本次更新描述信息
         """
-        print("路径：" + package_path)
         print('\n\n===========开始上传fir操作=app_name:%s=app_version:%s========' %
               (app_name, app_version))
         if package_path:

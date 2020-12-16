@@ -98,7 +98,6 @@ if __name__ == '__main__':
                 UploadIpaApk.fir(ipa_path, description, app_name, app_version, app_build_num, app_build_id,
                                  hf_settings.FIR_API_TOKEN, hf_settings.FIR_IPA_DOWNLOAD_URL)
             else:
-                print("\n\n===========开始上传蒲公英操作===========")
                 UploadIpaApk.pgyer(ipa_path, description, hf_settings.PGYER_API_KEY, hf_settings.PGYER_IPA_DOWNLOAD_URL)
     else:
         exit("\n\n===========没有找到对应的ipa===========")
