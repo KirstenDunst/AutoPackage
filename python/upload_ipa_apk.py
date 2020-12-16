@@ -1,38 +1,25 @@
-'''
+"""
 @Author: Cao Shixin
 @Date: 2020-05-27 19:54:39
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-14 16:54:53
+LastEditTime: 2020-12-14 15:58:50
 @Description: 包上传工具
 @Email: cao_shixin@yahoo.com
 @Company: BrainCo
-'''
+"""
 import os
 import webbrowser
 import requests
 import json
-from access_infor import AccessInformation
-
-pugongying_ipa_download_url = 'https://www.pgyer.com/XXXXX'  # 蒲公英的APP地址
-fir_ipa_download_url = 'http://d.firim.top/XXXXX'  # fir下载安装包路径地址
-
-# 蒲公英账号API_KEY
-API_KEY = 'X'
-
-# fir token
-FIR_API_TOKEN = 'X'
-
-# appstore
-DEVELOP_APPID = 'X'
-DEVELOP_APPID_SECRET = 'X'  # 注意这里的密码是授权码，并不是明文登陆密码
 
 
 class UploadIpaApk:
     """
     上传包处理
     """
+
     @staticmethod
-    def pugongying(package_path, description):
+    def pgyer(package_path, description, api_key, pgyer_ipa_download_url):
         """
         上传蒲公英
         ：package_path：包文件路径地址（本地文件地址）
@@ -42,7 +29,7 @@ class UploadIpaApk:
             # https://www.pgyer.com/doc/api 具体参数可以进去里面查看,
             url = 'https://www.pgyer.com/apiv2/app/upload'
             data = {
-                '_api_key': API_KEY,
+                '_api_key': api_key,
                 'installType': '1',
                 'buildUpdateDescription': description
             }
@@ -50,28 +37,28 @@ class UploadIpaApk:
             r = requests.post(url, data=data, files=files)
             if r.status_code == 200:
                 # 打开浏览器
-                webbrowser.open(pugongying_ipa_download_url,
+                webbrowser.open(pgyer_ipa_download_url,
                                 new=1,
                                 autoraise=True)
         else:
             exit('\n=================包路径错误:' + package_path)
 
     @staticmethod
-    def fir(package_path, description, app_name, app_version, app_build):
+    def fir(package_path, description, app_name, app_version, app_build, build_id, fir_api_token, fir_ipa_download_url):
         """
         上传fir
         ：package_path：包文件路径地址（本地文件地址）
         ：description： 本次更新描述信息
         """
         print("路径：" + package_path)
-        print('\n\n===========开始上传fir操作=app_name:%s app_version:%s========' %
+        print('\n\n===========开始上传fir操作=app_name:%s=app_version:%s========' %
               (app_name, app_version))
         if package_path:
             # https://www.betaqr.com/docs 上报文档
             data = {
-                'api_token': FIR_API_TOKEN,
+                'api_token': fir_api_token,
                 'type': 'ios',
-                'bundle_id': 'tech.brainco.focusimprove'
+                'bundle_id': build_id
             }
             authAsk = requests.post(
                 'http://api.bq04.com/apps',
@@ -106,30 +93,10 @@ class UploadIpaApk:
             exit('\n====================包路径错误:' + package_path)
 
     @staticmethod
-    def appstore(package_path):
+    def appstore(package_path, app_id, app_secret):
         """
         上传appstore
         ：package_path：包路径
         """
-        if package_path:
-            os.system('xcrun altool --upload-app -f ' + package_path + ' -u ' +
-                      DEVELOP_APPID + ' -p ' + DEVELOP_APPID_SECRET)
-        else:
-            exit('\n====================包路径错误:' + package_path)
-
-
-if __name__ == '__main__':
-    """打包提交检测"""
-    # 上传平台
-    upload_appstore = AccessInformation.platform_upload_AppStore()
-    ipa_path = input('请输入要上传ipa包的本机地址路径,[或Q退出]：')
-    if ipa_path.upper() == 'Q':
-        exit()
-    if not ipa_path:
-        exit("\n\n===========没有找到对应的ipa===========")
-    if upload_appstore:
-        print("\n\n===========开始上传AppStore===========")
-        UploadIpaApk.appstore(ipa_path)
-    else:
-        print("\n\n===========开始上传蒲公英操作===========")
-        UploadIpaApk.pugongying(ipa_path, '上传的新包')
+        os.system('xcrun altool --upload-app -f ' + package_path + ' -u ' +
+                  app_id + ' -p ' + app_secret)

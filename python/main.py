@@ -1,12 +1,12 @@
-'''
+"""
 @Author: Cao Shixin
 @Date: 2020-05-27 19:54:39
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-14 16:53:13
+LastEditTime: 2020-12-14 16:31:24
 @Description: 自动打包根项目，运行这个即可
 @Email: cao_shixin@yahoo.com
 @Company: BrainCo
-'''
+"""
 import os
 from access_infor import AccessInformation
 from git_branch import GitBranch
@@ -30,15 +30,15 @@ if __name__ == '__main__':
         hf_settings.project_base_path)
 
     # 获取打包环境s
-    package_envior = 'Release'
+    package_environment = 'Release'
     # 上传平台
-    upload_appstore = AccessInformation.platform_upload_AppStore()
+    upload_appstore = AccessInformation.platform_upload_appstore()
     if not upload_appstore:
         description = input("请输入打包版本更新内容:")
-        package_envior = AccessInformation.get_packaging_enviorment()
-        description = package_envior + '环境: ' + description
+        package_environment = AccessInformation.get_package_environment()
+        description = package_environment + '环境: ' + description
         # 开启文件替换
-        FileFolderOperate.replaceText(
+        FileFolderOperate.replace_text(
             hf_settings.project_base_path + '/lib/provider/app_provider.dart',
             '_appstoreReview = localReview;', '_appstoreReview = false;')
 
@@ -64,14 +64,13 @@ if __name__ == '__main__':
 
         print('-====================pubspec更新=================')
         os.system('flutter pub get && flutter build ios --' +
-                  package_envior.lower())
+                  package_environment.lower())
     except Exception as e:
-        exit('出错了，出师不利，什么问题：' + e)
+        exit('出错了，出师不利，什么问题：%s' % e)
 
-    project_name = FileFolderOperate.get_project_name(
-        hf_settings.project_base_path)
-    AutoPackage(hf_settings.project_base_path, package_envior,
-                hf_settings.package_path, package_sign_plist, project_name)
+    project_name = FileFolderOperate.get_project_name(hf_settings.project_base_path)
+    AutoPackage(hf_settings.project_base_path, package_environment, hf_settings.package_path,
+                '%s/%s' % (hf_settings.export_plist_father_path, package_sign_plist), project_name)
 
     print("===========开始准备上传操作，请注意！！！！============")
     # 包名
@@ -81,22 +80,25 @@ if __name__ == '__main__':
     print("路径：" + ipa_path)
 
     package_info_plist_path = hf_settings.package_path + '/archive.xcarchive/Products/Applications/' + project_name + '.app/Info.plist'
-    app_name = BuddyPlist.getBundleName(package_info_plist_path)
-    app_version = BuddyPlist.getBundleVersion(package_info_plist_path)
-    app_build_num = BuddyPlist.getBundleBuild(package_info_plist_path)
-    app_build_id = BuddyPlist.getBundleID(package_info_plist_path)
+    app_name = BuddyPlist.get_bundle_name(package_info_plist_path)
+    app_version = BuddyPlist.get_bundle_version(package_info_plist_path)
+    app_build_num = BuddyPlist.get_bundle_build(package_info_plist_path)
+    app_build_id = BuddyPlist.get_bundle_id(package_info_plist_path)
 
-    if upload_appstore:
-        print("\n\n===========开始上传AppStore===========")
-        # 项目里面已经处理release模式自动上传bugly符号表
-        # SymbolTable.bugly(
-        #     hf_settings.package_path + '/' + project_name + '.app.dSYM',
-        #     app_build_id, '%s%s' % (app_version, app_build_num))
-        UploadIpaApk.appstore(ipa_path)
-    else:
-        if package_envior == 'Release':
-            UploadIpaApk.fir(ipa_path, description, app_name, app_version,
-                             app_build_num)
+    if ipa_path:
+        if upload_appstore:
+            print("\n\n===========开始上传AppStore===========")
+            # 项目里面已经处理release模式自动上传bugly符号表
+            # python.symbol_table.SymbolTable.bugly(
+            #     hf_settings.package_path + '/' + project_name + '.app.dSYM',
+            #     app_build_id, '%s%s' % (app_version, app_build_num), hf_settings.BUGLY_APP_ID, hf_settings.BUGLY_APP_KEY)
+            UploadIpaApk.appstore(ipa_path, hf_settings.APPSTORE_APP_ID, hf_settings.APPSTORE_APP_ID_SECRET)
         else:
-            print("\n\n===========开始上传蒲公英操作===========")
-            UploadIpaApk.pugongying(ipa_path, description)
+            if package_environment == 'Release':
+                UploadIpaApk.fir(ipa_path, description, app_name, app_version, app_build_num, app_build_id,
+                                 hf_settings.FIR_API_TOKEN, hf_settings.FIR_IPA_DOWNLOAD_URL)
+            else:
+                print("\n\n===========开始上传蒲公英操作===========")
+                UploadIpaApk.pgyer(ipa_path, description, hf_settings.PGYER_API_KEY, hf_settings.PGYER_IPA_DOWNLOAD_URL)
+    else:
+        exit("\n\n===========没有找到对应的ipa===========")

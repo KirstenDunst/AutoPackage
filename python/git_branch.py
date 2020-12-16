@@ -1,11 +1,11 @@
-'''
+"""
 @Author: your name
 @Date: 2020-05-27 16:12:57
 LastEditTime: 2020-12-04 15:38:54
 LastEditors: Cao Shixin
 @Description: 代码的分支切换
 @FilePath: /package/git_branch_change.py
-'''
+"""
 
 import os
 import subprocess
@@ -15,6 +15,7 @@ class GitBranch(object):
     """
     git的分支切换和代码拉取
     """
+
     def __init__(self, project_path, project_alarm):
         # 项目根路径
         self.project_path = project_path
@@ -24,8 +25,8 @@ class GitBranch(object):
 
     def __branch_change(self, project_path, project_alarm):
         """执行分支切换"""
-        temp_branch_dict = self.__get_brancheDits(project_path)
-        temp_branch_list = self.__get_brancheLists(project_path)
+        temp_branch_dict = self.__get_branchedits(project_path)
+        temp_branch_list = self.__get_branchelists(project_path)
 
         branch_str = ''
         for key, value in temp_branch_dict.items():
@@ -40,7 +41,7 @@ class GitBranch(object):
             # 转到工程路径下
             os.chdir(project_path)
         except Exception as e:
-            print("工程路径出错：" + e)
+            print("工程路径出错：%s" % e)
             exit()
         print(temp_branch_list)
 
@@ -62,12 +63,13 @@ class GitBranch(object):
 
         # 在拉取代码耗时过程中不会执行下面的代码，代码拉取成功之后才会向下继续执行
 
-    def __get_brancheDits(self, project_dir):
+    @staticmethod
+    def __get_branchedits(project_dir):
         try:
             # 转到工程路径下
             os.chdir(project_dir)
         except Exception as e:
-            print("工程路径出错：" + e)
+            print("工程路径出错：%s" % e)
             exit()
         branches_str = subprocess.check_output(["git", "branch",
                                                 "-r"]).decode()
@@ -82,12 +84,13 @@ class GitBranch(object):
             # 使用str的lstrip方法将字符串的前的空格和当前branch前的“*”标记去除
         return branch_dict
 
-    def __get_brancheLists(self, project_dir):
+    @staticmethod
+    def __get_branchelists(project_dir):
         try:
             # 转到工程路径下
             os.chdir(project_dir)
         except Exception as e:
-            print("工程路径出错：" + e)
+            print("工程路径出错：%s" % e)
             exit()
         branches_str = subprocess.check_output(["git", "branch",
                                                 "-l"]).decode()

@@ -1,18 +1,18 @@
-'''
+"""
 Author: your name
 Date: 2020-08-20 15:49:22
 LastEditTime: 2020-12-04 15:51:30
 LastEditors: Cao Shixin
 Description: 作内容迁移的文件替换操作
 FilePath: /package_improve/replace_content.py
-'''
+"""
 import os
 import shutil
 
 
 class FileFolderOperate:
     @staticmethod
-    def replaceText(file_path, origin_str, replace_str):
+    def replace_text(file_path, origin_str, replace_str):
         """
         替换文件中的某一类文字替换
         """
@@ -27,7 +27,7 @@ class FileFolderOperate:
             exit("文件路径不存在")
 
     @staticmethod
-    def replaceFile(file_path_replace, file_path_new):
+    def replace_file(file_path_replace, file_path_new):
         """
         文件替换
         :file_path_replace: 要被替换的文件地址
@@ -40,7 +40,7 @@ class FileFolderOperate:
         shutil.copy(file_path_new, file_path_replace)
 
     @staticmethod
-    def replaceFolder(folder_path_replace, folder_path_new):
+    def replace_folder(folder_path_replace, folder_path_new):
         """
         文件夹替换
         :folder_path_replace: 要被替换的文件夹地址
@@ -50,7 +50,7 @@ class FileFolderOperate:
         FileFolderOperate.copy_folder_all(folder_path_new, folder_path_replace)
 
     @staticmethod
-    def del_folder_all(filepath, target):
+    def del_folder_all(filepath):
         """
         删除某一目录下的所有文件或文件夹
         :param filepath: 路径
@@ -65,17 +65,17 @@ class FileFolderOperate:
                 shutil.rmtree(file_path)
 
     @staticmethod
-    def copy_folder_all(folderpath, targetFolder):
+    def copy_folder_all(folder_path, target_folder):
         """
         将目标文件下的所有文件，文件夹拷贝到另一个文件夹下
-        :folderpath: 有内容的文件夹路径
+        :folder_path: 有内容的文件夹路径
         :targetFolder: 要移到的目标文件夹路径
         """
-        folderpath_files = os.listdir(folderpath)
-        for file_name in folderpath_files:
-            full_file_name = os.path.join(folderpath, file_name)
+        folder_path_files = os.listdir(folder_path)
+        for file_name in folder_path_files:
+            full_file_name = os.path.join(folder_path, file_name)
             if os.path.isfile(full_file_name):
-                shutil.copy(full_file_name, targetFolder)
+                shutil.copy(full_file_name, target_folder)
 
     @staticmethod
     def ensure_file(file_path):

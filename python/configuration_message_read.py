@@ -1,27 +1,28 @@
-'''
+"""
 Author: Cao Shixin
 Date: 2020-11-27 18:15:24
 LastEditors: Cao Shixin
 LastEditTime: 2020-12-06 15:03:17
 Description: 获取项目里的一些配置信息
-'''
-import xml.etree.ElementTree as ET
+"""
+from xml.etree.ElementTree import fromstring
 
 
 class ProjectConfigurationRead(object):
     """
     读取项目里面的一些配置信息,目前只支持iOS
     """
-    def __init__(self, plist_path):
+
+    def __init__(self, plist_file_path):
         super(ProjectConfigurationRead, self).__init__()
         # 项目配置json，将配置里面的xml设置转化成json，方便后面文件的对应参数取值
         self.project_info_json = {}
-        plistContentStr = open(plist_path, 'r').read()  # 读取plist文件
-        plistXMLTree = ET.fromstring(plistContentStr)  # 转换成XML树
-        self.__convertTreeToDict(plistXMLTree, self.project_info_json)
-        print('读取解析%s' % (self.project_info_json))
+        plistContentStr = open(plist_file_path, 'r').read()  # 读取plist文件
+        plistXMLTree = fromstring(plistContentStr)  # 转换成XML树
+        self.__convert_tree_to_dict(plistXMLTree, self.project_info_json)
+        print('读取解析%s' % self.project_info_json)
 
-    def __convertTreeToDict(self, tree, d):
+    def __convert_tree_to_dict(self, tree, d):
         for index, item in enumerate(tree):  # 遍历整棵XML树
             if item.tag == 'key':  # 如果该item的tag为'key'
                 # 根据下一个结点的tag值不同，放在dict的不同位置上
@@ -32,9 +33,9 @@ class ProjectConfigurationRead(object):
                 elif tree[index + 1].tag == 'false':
                     d[item.text] = False
                 elif tree[index + 1].tag == 'dict':
-                    self.__convertTreeToDict(tree[index + 1], d)  # 递归下去
+                    self.__convert_tree_to_dict(tree[index + 1], d)  # 递归下去
             elif item.tag == 'dict':
-                self.__convertTreeToDict(item, d)
+                self.__convert_tree_to_dict(item, d)
 
     def get_project_bundle_name(self):
         """获取项目的显示名称"""

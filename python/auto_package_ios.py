@@ -1,11 +1,11 @@
-'''
+"""
 @Author: your name
 @Date: 2020-05-27 16:12:57
-LastEditTime: 2020-12-08 18:39:35
+LastEditTime: 2020-12-14 14:36:02
 LastEditors: Cao Shixin
 @Description: iOS自动打包并导出工具
 @FilePath: /package/git_branch_change.py
-'''
+"""
 import os
 import subprocess
 import time
@@ -13,16 +13,17 @@ import time
 
 class AutoPackage(object):
     """自动打包并导出文件"""
+
     def __init__(self, project_base_path, package_envior, package_path,
-                 package_plist_file_name, project_name):
+                 package_plist_file, project_name):
         # flutter项目根路径
         self.project_base_path = project_base_path
         # 打包的ipa生成路径（父级目录即可）
         self.package_path = package_path
         # 打包环境
         self.package_envior = package_envior
-        # 手动打包配置文件信息文件名称
-        self.package_plist_file_name = package_plist_file_name
+        # 手动打包配置文件信息文件地址
+        self.package_plist_file = package_plist_file
         # 项目的文件名
         self.project_name = project_name
         self.package()
@@ -33,13 +34,13 @@ class AutoPackage(object):
         """
         self.clean()
         # 删除之前的文件
-        subprocess.call(['rm', '-rf', '%s' % (self.package_path)])
+        subprocess.call(['rm', '-rf', '%s' % self.package_path])
         time.sleep(1)
         # 创建文件夹存放打包文件
-        subprocess.call(['mkdir', '-p', '%s' % (self.package_path)])
+        subprocess.call(['mkdir', '-p', '%s' % self.package_path])
         time.sleep(1)
         self.archive()
-        self.exportIpa()
+        self.export_ipa()
 
     def clean(self):
         """
@@ -81,7 +82,7 @@ class AutoPackage(object):
         else:
             print("=======archive成功,用时:%.2f秒=======" % (end - start))
 
-    def exportIpa(self):
+    def export_ipa(self):
         """
         导出ipa包
         """
@@ -90,12 +91,9 @@ class AutoPackage(object):
         print("\n\n==========请你耐心等待一会~===========")
         start = time.time()
 
-        # 当前文件的父路径
-        father_path = os.path.dirname(os.path.realpath(__file__))
-
-        export_command = 'xcodebuild -exportArchive -archivePath %s/archive.xcarchive -exportPath %s -exportOptionsPlist %s/%s.plist' % (
-            self.package_path, self.package_path, father_path,
-            self.package_plist_file_name)
+        export_command = 'xcodebuild -exportArchive -archivePath %s/archive.xcarchive -exportPath %s -exportOptionsPlist %s.plist' % (
+            self.package_path, self.package_path,
+            self.package_plist_file)
         print('===========%s' % export_command)
         export_command_run = subprocess.Popen(export_command, shell=True)
 
