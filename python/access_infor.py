@@ -28,20 +28,25 @@ class AccessInformation:
     @staticmethod
     def get_package_environment():
         """获取当前打包的环境"""
-        page_environment = input('准备打包什么环境？ Profile? Release?。或输入Q退出：[P/R/Q]')
+        page_environment = input('准备打包什么环境？ Profile? Release? Debug。或输入Q退出：[P/R/D/Q]')
         if page_environment.upper() == 'P':
             return 'Profile'
         elif page_environment.upper() == 'R':
             return 'Release'
+        elif page_environment.upper() == 'D':
+            return 'Debug'
         elif page_environment.upper() == 'Q':
             exit()
         else:
             exit('输入不合法，请重新运行main.py重新开始')
 
     @staticmethod
-    def get_package_export_plist(upload_appstore):
-        """打包适用环境"""
+    def get_package_export_plist(upload_appstore, package_environment):
+        """打包配置文件"""
         if upload_appstore:
             return "ExportOptions_AppStore"
         else:
-            return "ExportOptions_AdHoc"
+            if package_environment == 'Debug':
+                return "ExportOptions_Develop"
+            else:
+                return "ExportOptions_AdHoc"
