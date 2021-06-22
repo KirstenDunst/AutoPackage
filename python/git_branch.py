@@ -15,31 +15,32 @@ class GitBranch(object):
     """
     git的分支切换和代码拉取
     """
-
-    def __init__(self, project_path, project_alarm):
+    def __init__(self, project_path, temp_git_commit_path, project_alarm):
         # 项目根路径
         self.project_path = project_path
+        # 临时保存git commit文件地址
+        self.temp_git_commit_path = temp_git_commit_path
         # 提示语
         self.project_alarm = project_alarm
-        self.__branch_change(project_path, project_alarm)
 
-    def __branch_change(self, project_path, project_alarm):
+    # 执行分支切换操作
+    def branch_change(self):
         """执行分支切换"""
-        temp_branch_dict = self.__get_branchedits(project_path)
-        temp_branch_list = self.__get_branchelists(project_path)
+        temp_branch_dict = self.__get_branchedits()
+        temp_branch_list = self.__get_branchelists()
 
         branch_str = ''
         for key, value in temp_branch_dict.items():
             branch_str += (key + " : " + value + "\n")
 
-        branch_select_key = input('请选择你想要打包使用的' + project_alarm + '远端代码分支\n' +
-                                  branch_str + ':')
+        branch_select_key = input('请选择你想要打包使用的' + self.project_alarm +
+                                  '远端代码分支\n' + branch_str + ':')
         branch_name_origin = temp_branch_dict[branch_select_key]
         branch_name_local = branch_name_origin.replace('origin/', '')
         print('选中的分支名：' + branch_name_origin)
         try:
             # 转到工程路径下
-            os.chdir(project_path)
+            os.chdir(self.project_path)
         except Exception as e:
             print("工程路径出错：%s" % e)
             exit()
@@ -59,15 +60,21 @@ class GitBranch(object):
             os.system('git checkout -b ' + branch_name_local + ' ' +
                       branch_name_origin)
         else:
-            os.system(' git checkout ' + branch_name_local + ' && git pull')
+            os.system('git checkout ' + branch_name_local + ' && git pull')
 
-        # 在拉取代码耗时过程中不会执行下面的代码，代码拉取成功之后才会向下继续执行
+        # 在拉取代码耗时过程中不会执行下面的代码，代码拉取成功之后才会向下继续执行，保存最近三次提交的commit记录
+        temp_path_file = self.temp_git_commit_path + '/nearly_git_commit.txt'
+        os.system(
+            "git log -3 --graph --pretty=format:'%s' --abbrev-commit --date=relative >"
+            + temp_path_file)
+        with open(temp_path_file) as file_obj:
+            content = file_obj.read()
+        return content
 
-    @staticmethod
-    def __get_branchedits(project_dir):
+    def __get_branchedits(self):
         try:
             # 转到工程路径下
-            os.chdir(project_dir)
+            os.chdir(self.project_path)
         except Exception as e:
             print("工程路径出错：%s" % e)
             exit()
@@ -84,11 +91,10 @@ class GitBranch(object):
             # 使用str的lstrip方法将字符串的前的空格和当前branch前的“*”标记去除
         return branch_dict
 
-    @staticmethod
-    def __get_branchelists(project_dir):
+    def __get_branchelists(self):
         try:
             # 转到工程路径下
-            os.chdir(project_dir)
+            os.chdir(self.project_path)
         except Exception as e:
             print("工程路径出错：%s" % e)
             exit()

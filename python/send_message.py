@@ -1,10 +1,10 @@
-"""
+'''
 Author: Cao Shixin
-Date: 2020-11-27 18:10:26
+Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-04 14:47:02
+LastEditTime: 2021-06-21 13:35:57
 Description: 发送消息
-"""
+'''
 import requests
 import smtplib
 import json
@@ -17,7 +17,6 @@ class SendMessage:
     """
     发送消息处理
     """
-
     @staticmethod
     def format_address(s):
         name, address = parseaddr(s)
@@ -60,17 +59,25 @@ class SendMessage:
         return x.reason
 
     @staticmethod
-    def send_ding_talk_link(url):
+    def send_ding_talk_link(url, messageUrl, title="标题", text="内容", picUrl=""):
         # 向钉钉群发送链接消息
         headers = {'Content-Type': 'application/json;charset=utf-8'}
+        link = {"text": text, "title": title, "messageUrl": messageUrl}
+        #图片可以加，可以不加
+        if len(picUrl) > 0:
+            link["picUrl"] = picUrl
         data = {
             "msgtype": "link",
-            "link": {
-                "text": '点我跳转百度',
-                "title": "点我",
-                "picUrl": "图片链接",  # 可以加，可以不加
-                "messageUrl": "https://www.baidu.com"
-            },
+            "link": link,
         }
         r = requests.post(url, data=json.dumps(data), headers=headers)
         return r.reason
+
+
+if __name__ == '__main__':
+    ding_token_url = input('输入钉钉机器人的带token的url地址：')
+    link_url = input('点击消息的url连接地址：')
+    title_str = input('标题：')
+    content_str = input('内容：')
+    pic_url = input('（appIcon地址）图片地址：')
+    SendMessage.send_ding_talk_link(ding_token_url,link_url,title=title_str,text=content_str,picUrl=pic_url)

@@ -56,6 +56,8 @@ class FileFolderOperate:
         :param filepath: 路径
         :return:
         """
+        if not os.path.exists(filepath):
+            return
         del_list = os.listdir(filepath)
         for f in del_list:
             file_path = os.path.join(filepath, f)
