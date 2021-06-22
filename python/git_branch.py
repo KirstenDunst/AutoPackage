@@ -60,7 +60,7 @@ class GitBranch(object):
             os.system('git checkout -b ' + branch_name_local + ' ' +
                       branch_name_origin)
         else:
-            os.system('git checkout ' + branch_name_local + ' && git pull')
+            os.system('git checkout ' + branch_name_local + ' && git config pull.rebase false && git pull')
 
         # 在拉取代码耗时过程中不会执行下面的代码，代码拉取成功之后才会向下继续执行，保存最近三次提交的commit记录
         temp_path_file = self.temp_git_commit_path + '/nearly_git_commit.txt'

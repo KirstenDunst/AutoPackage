@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-06-21 13:35:57
+LastEditTime: 2021-06-22 16:48:06
 Description: 发送消息
 '''
 import requests
@@ -39,12 +39,8 @@ class SendMessage:
         print("===========邮件发送成功===========")
 
     @staticmethod
-    def send_ding_talk_text(text, ding_talk_token):
+    def send_ding_talk_text(url, text):
         # 向钉钉群发送文本消息
-        print(text)
-        headers = {'Content-Type': 'application/json'}
-        webhook = 'https://oapi.dingtalk.com/robot/send?access_token={}'.format(
-            ding_talk_token)
         data = {
             "msgtype": "text",
             "text": {
@@ -55,7 +51,7 @@ class SendMessage:
                 "isAtAll": False
             }
         }
-        x = requests.post(url=webhook, data=json.dumps(data), headers=headers)
+        x = requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
         return x.reason
 
     @staticmethod
@@ -75,6 +71,10 @@ class SendMessage:
 
 
 if __name__ == '__main__':
+
+    
+
+
     ding_token_url = input('输入钉钉机器人的带token的url地址：')
     link_url = input('点击消息的url连接地址：')
     title_str = input('标题：')
