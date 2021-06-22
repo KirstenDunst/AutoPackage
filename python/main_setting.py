@@ -1,13 +1,10 @@
-"""
-@Author: Cao Shixin
-@Date: 2020-05-28 09:31:14
+'''
+Author: Cao Shixin
+Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-04 14:09:44
-@Description: 基础设置
-@Email: cao_shixin@yahoo.com
-@Company: BrainCo
-"""
-
+LastEditTime: 2021-06-22 17:31:01
+Description: 基础设置
+'''
 
 class MainSettings(object):
     """常用设置"""
@@ -18,9 +15,11 @@ class MainSettings(object):
         # 项目地址路径flutter
         self.project_base_path = '/Users/caoshixin/公司/ProjectDev/focus_world'
         # 包导出的配置型文件存放父级目录地址
-        self.export_plist_father_path = '/Users/caoshixin/Desktop/AutoPackage'
-        # 包成立之后的存放位置
-        self.package_path = '/Users/caoshixin/Desktop/AutoPackage/ipa/focus_world'
+        self.export_plist_father_path = '/Users/caoshixin/Desktop/AutoPackage/focusworld'
+        # 包成立之后 ios包的存放位置
+        self.ipa_package_path = '/Users/caoshixin/Desktop/AutoPackage/ipa'
+        # 安卓包存放位置
+        self.android_package_path = '/Users/caoshixin/Desktop/AutoPackage/focusworld/apk'
 
         # 专属消息发送信息
         # 发送人的地址
@@ -45,6 +44,8 @@ class MainSettings(object):
         self.PGYER_API_KEY = 'X'
         # fir token
         self.FIR_API_TOKEN = 'X'
+         # fir 上传需要额外上传icon   应用icon地址
+        self.icon_path = '/Users/caoshixin/Desktop/AutoPackage/focusworld/icon.png'
         # appstore
         self.APPSTORE_APP_ID = 'X'
         # 注意这里的密码是授权码，并不是明文登陆密码
