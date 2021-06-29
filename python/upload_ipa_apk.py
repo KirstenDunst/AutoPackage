@@ -57,13 +57,14 @@ class UploadIpaApk:
         ：package_path：包文件路径地址（本地文件地址）
         ：description： 本次更新描述信息
         """
-        print('\n\n===========开始上传fir操作=app_name:%s=app_version:%s========' %
-              (app_name, app_version))
+        print(
+            '\n\n===========开始上传fir操作=app_name:%s=app_version:%s=release_type:%s========'
+            % (app_name, app_version, release_type))
         if package_path:
             # https://www.betaqr.com/docs 上报文档
             data = {'api_token': fir_api_token, 'bundle_id': build_id}
             # ios 或者 android,这里用release_type来判断区分了
-            if release_type:
+            if len(release_type) > 0:
                 data['type'] = 'ios'
             else:
                 data['type'] = 'android'
@@ -72,6 +73,7 @@ class UploadIpaApk:
                 'http://api.bq04.com/apps',
                 data=json.dumps(data),
                 headers={'Content-Type': 'application/json'})
+            print(authAsk.json())
             if authAsk.status_code == 201:
                 response = authAsk.json()
                 uploadData = {
@@ -82,7 +84,7 @@ class UploadIpaApk:
                     'x:build': app_build,
                     'x:changelog': description,
                 }
-                if release_type:
+                if len(release_type) > 0:
                     # 打包类型，只针对 iOS (Adhoc, Inhouse)（上传 ICON 时不需要）
                     uploadData['x:release_type'] = release_type
                 uploadUrl = response['cert']['binary']['upload_url']
