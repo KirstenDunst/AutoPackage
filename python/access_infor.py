@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-06-22 17:00:47
+LastEditTime: 2021-12-17 13:01:53
 Description: 使用信息获取
 '''
 
@@ -12,7 +12,7 @@ class AccessInformation:
     @staticmethod
     def packaging_mode():
         '''打包模式快速响应处理'''
-        platform = input('是否是一般打包模式？或输入Q退出：[T/F/Q]:')
+        platform = input('是否是一般打包模式？True?False?或输入Q退出：[T/F/Q]:')
         if platform.upper() == 'T':
             return True
         elif platform.upper() == 'F':
