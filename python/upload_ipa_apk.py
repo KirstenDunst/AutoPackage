@@ -127,6 +127,7 @@ class UploadIpaApk:
             # os.system('xcrun altool --validate-app -f ' + package_path +
             #           ' -t iOS --apiKey ' + api_key + ' --apiIssuer ' +
             #           api_issuer)
+            print("\n\n===========开始上传AppStore===========")
             # 上传 --verbose
             os.system('xcrun altool --upload-app -f ' + package_path +
                       ' -t iOS --apiKey ' + api_key + ' --apiIssuer ' +
