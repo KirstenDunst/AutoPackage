@@ -115,13 +115,28 @@ class UploadIpaApk:
             exit('\n====================包路径错误:' + package_path)
 
     @staticmethod
-    def appstore(package_path, app_id, app_secret):
+    def appstore(package_path, api_key, api_issuer):
         """
         上传appstore
         ：package_path：包路径
+        api_key: 密钥id
+        api_issuer： issuer ID
         """
-        os.system('xcrun altool --upload-app -f ' + package_path + ' -u ' +
-                  app_id + ' -p ' + app_secret)
+        try:
+            # 验证 --verbose
+            # os.system('xcrun altool --validate-app -f ' + package_path +
+            #           ' -t iOS --apiKey ' + api_key + ' --apiIssuer ' +
+            #           api_issuer)
+            # 上传 --verbose
+            os.system('xcrun altool --upload-app -f ' + package_path +
+                      ' -t iOS --apiKey ' + api_key + ' --apiIssuer ' +
+                      api_issuer)
+            print(
+                "\n\n===========上传AppStore完成，请前往App Store Connect查看==========="
+            )
+        except Exception as e:
+            print("\n\n===========由于网络或其他原因导致上传AppStore失败：" + e +
+                  "，请手动上传！===========")
 
 
 if __name__ == '__main__':
