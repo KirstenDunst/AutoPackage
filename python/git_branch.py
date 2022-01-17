@@ -24,18 +24,22 @@ class GitBranch(object):
         self.project_alarm = project_alarm
 
     # 执行分支切换操作
-    def branch_change(self):
+    def branch_change(self, branch_name=''):
         """执行分支切换"""
         temp_branch_dict = self.__get_branchedits()
         temp_branch_list = self.__get_branchelists()
 
-        branch_str = ''
-        for key, value in temp_branch_dict.items():
-            branch_str += (key + " : " + value + "\n")
+        if not branch_name == '':
+            branch_name_origin = branch_name
+        else:
+            branch_str = ''
+            for key, value in temp_branch_dict.items():
+                branch_str += (key + " : " + value + "\n")
 
-        branch_select_key = input('请选择你想要打包使用的' + self.project_alarm +
-                                  '远端代码分支\n' + branch_str + ':')
-        branch_name_origin = temp_branch_dict[branch_select_key]
+            branch_select_key = input('请选择你想要打包使用的' + self.project_alarm +
+                                      '远端代码分支\n' + branch_str + ':')
+            branch_name_origin = temp_branch_dict[branch_select_key]
+
         branch_name_local = branch_name_origin.replace('origin/', '')
         print('选中的分支名：' + branch_name_origin)
         try:
@@ -45,8 +49,10 @@ class GitBranch(object):
             print("工程路径出错：%s" % e)
             exit()
         print(temp_branch_list)
-
-        ensureAgain = input("请再次确认当前分支是否有没有提交的修改，选择分支将会清除本地修改,输入T继续、Q退出：[T/Q]")
+        if branch_name == '':
+            ensureAgain = input("请再次确认当前分支是否有没有提交的修改，选择分支将会清除本地修改,输入T继续、Q退出：[T/Q]")
+        else:
+            ensureAgain = 'T'
         if ensureAgain.upper() == 'T':
             os.system('git reset --hard && git clean -df')
         elif ensureAgain.upper() == 'Q':
@@ -60,7 +66,8 @@ class GitBranch(object):
             os.system('git checkout -b ' + branch_name_local + ' ' +
                       branch_name_origin)
         else:
-            os.system('git checkout ' + branch_name_local + ' && git config pull.rebase false && git pull')
+            os.system('git checkout ' + branch_name_local +
+                      ' && git config pull.rebase false && git pull')
 
         # 在拉取代码耗时过程中不会执行下面的代码，代码拉取成功之后才会向下继续执行，保存最近三次提交的commit记录
         temp_path_file = self.temp_git_commit_path + '/nearly_git_commit.txt'

@@ -2,11 +2,10 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-06-21 20:44:54
+LastEditTime: 2022-01-17 11:14:10
 Description: 便捷获取包的一些配置信息
 '''
 import os
-import json
 import re
 
 

@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-12-17 13:01:53
+LastEditTime: 2022-01-17 09:54:45
 Description: 使用信息获取
 '''
 
@@ -20,7 +20,19 @@ class AccessInformation:
         elif platform.upper() == 'Q':
             exit()
         else:
-            exit('输入不合法，请重新运行main.py重新开始')
+            exit('输入不合法，请重新运行脚本重新开始')
+            
+    @staticmethod
+    def regular_packing():
+        platform = input('是否开启定时打包任务? T:开启，F:关闭，Q：退出？[T/F/Q]:')
+        if platform.upper() == 'T':
+            return True
+        elif platform.upper() == 'F':
+            return False
+        elif platform.upper() == 'Q':
+            exit()
+        else:
+            exit('输入不合法，请重新运行脚本重新开始')
         
 
     @staticmethod
@@ -34,7 +46,7 @@ class AccessInformation:
         elif platform.upper() == 'Q':
             exit()
         else:
-            exit('输入不合法，请重新运行main.py重新开始')
+            exit('输入不合法，请重新运行脚本重新开始')
 
     @staticmethod
     def get_package_environment():
@@ -49,7 +61,7 @@ class AccessInformation:
         elif page_environment.upper() == 'Q':
             exit()
         else:
-            exit('输入不合法，请重新运行main.py重新开始')
+            exit('输入不合法，请重新运行脚本重新开始')
 
     @staticmethod
     def get_package_export_plist(upload_appstore, package_environment):

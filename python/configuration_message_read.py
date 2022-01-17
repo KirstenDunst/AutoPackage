@@ -1,12 +1,11 @@
-"""
+'''
 Author: Cao Shixin
-Date: 2020-11-27 18:15:24
+Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2020-12-06 15:03:17
+LastEditTime: 2022-01-17 11:14:21
 Description: 获取项目里的一些配置信息
-"""
+'''
 from xml.etree.ElementTree import fromstring
-
 
 class ProjectConfigurationRead(object):
     """

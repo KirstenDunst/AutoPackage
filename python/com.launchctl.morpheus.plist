@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <!-- 名称，要全局唯一 -->
+    <string>com.launchctl.morpheus.plist</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/python3</string>
+        <string>/Users/caoshixin/Desktop/AutoPackage/AutoPackage/python/auto.py</string>
+    </array>
+    <!-- 执行周期 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Minute</key>
+        <integer>30</integer>
+        <key>Hour</key>
+        <integer>8</integer>
+    </dict>
+    <key>KeepAlive</key>
+    <false/>
+    <!-- 加载时执行一次 -->
+    <key>RunAtLoad</key>
+    <true/>
+    <!-- 标准输出文件 -->
+    <key>StandardOutPath</key>
+    <string>/Users/caoshixin/Desktop/AutoPackage/AutoPackage/python/auto-out.log</string>
+    <!-- 标准错误输出文件 -->
+    <key>StandardErrorPath</key>
+    <string>/Users/caoshixin/Desktop/AutoPackage/AutoPackage/python/auto-err.log</string>
+</dict>
+</plist>
+

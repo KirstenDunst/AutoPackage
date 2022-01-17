@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-06-22 17:31:01
+LastEditTime: 2022-01-17 11:20:28
 Description: 基础设置
 '''
 
@@ -20,6 +20,8 @@ class MainSettings(object):
         self.ipa_package_path = '/Users/caoshixin/Desktop/AutoPackage/ipa'
         # 安卓包存放位置
         self.android_package_path = '/Users/caoshixin/Desktop/AutoPackage/focusworld/apk'
+        # 定时打包plist文件名
+        self.regular_launchctl_name = 'com.launchctl.morpheus.plist'
 
         # 专属消息发送信息
         # 发送人的地址
@@ -47,6 +49,6 @@ class MainSettings(object):
          # fir 上传需要额外上传icon   应用icon地址
         self.icon_path = '/Users/caoshixin/Desktop/AutoPackage/focusworld/icon.png'
         # appstore
-        self.APPSTORE_APP_ID = 'X'
+        self.APPSTORE_API_KEY = 'X'
         # 注意这里的密码是授权码，并不是明文登陆密码
-        self.APPSTORE_APP_ID_SECRET = 'X'
+        self.APPSTORE_API_ISSUER = 'X'

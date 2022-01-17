@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2021-06-22 16:48:06
+LastEditTime: 2022-01-17 11:23:00
 Description: 发送消息
 '''
 import requests
@@ -71,9 +71,6 @@ class SendMessage:
 
 
 if __name__ == '__main__':
-
-    
-
 
     ding_token_url = input('输入钉钉机器人的带token的url地址：')
     link_url = input('点击消息的url连接地址：')
