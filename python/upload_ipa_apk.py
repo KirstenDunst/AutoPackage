@@ -30,7 +30,6 @@ class UploadIpaApk:
             url = 'https://www.pgyer.com/apiv2/app/upload'
             data = {
                 '_api_key': api_key,
-                'installType': '1',
                 'buildUpdateDescription': description
             }
             files = {'file': open(package_path, 'rb')}
