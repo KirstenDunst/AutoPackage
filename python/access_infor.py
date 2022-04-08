@@ -2,13 +2,13 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2022-01-17 09:54:45
+LastEditTime: 2022-04-07 16:35:15
 Description: 使用信息获取
 '''
 
+
 class AccessInformation:
     """用户信息获取"""
-
     @staticmethod
     def packaging_mode():
         '''打包模式快速响应处理'''
@@ -21,7 +21,7 @@ class AccessInformation:
             exit()
         else:
             exit('输入不合法，请重新运行脚本重新开始')
-            
+
     @staticmethod
     def regular_packing():
         platform = input('是否开启定时打包任务? T:开启，F:关闭，Q：退出？[T/F/Q]:')
@@ -33,7 +33,6 @@ class AccessInformation:
             exit()
         else:
             exit('输入不合法，请重新运行脚本重新开始')
-        
 
     @staticmethod
     def platform_upload_appstore():
@@ -51,7 +50,8 @@ class AccessInformation:
     @staticmethod
     def get_package_environment():
         """获取当前打包的环境"""
-        page_environment = input('准备打包什么环境？ Profile? Release? Debug。或输入Q退出：[P/R/D/Q]:')
+        page_environment = input(
+            '准备打包什么环境？ Profile? Release? Debug。或输入Q退出：[P/R/D/Q]:')
         if page_environment.upper() == 'P':
             return 'Profile'
         elif page_environment.upper() == 'R':
@@ -73,3 +73,16 @@ class AccessInformation:
                 return "ExportOptions_Develop"
             else:
                 return "ExportOptions_AdHoc"
+
+    @staticmethod
+    def get_diff_evior():
+        """获取差量包的环境"""
+        page_environment = input('差分包文件的环境？ Develop? Release? 或输入Q退出：[R/D/Q]:')
+        if page_environment.upper() == 'R':
+            return 'release'
+        elif page_environment.upper() == 'D':
+            return 'develop'
+        elif page_environment.upper() == 'Q':
+            exit()
+        else:
+            exit('输入不合法，请重新运行脚本重新开始')
