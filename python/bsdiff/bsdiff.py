@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2019-11-29 17:22:10
 LastEditors: Cao Shixin
-LastEditTime: 2022-04-07 16:50:22
+LastEditTime: 2022-04-11 16:32:35
 Description: 
 '''
 # 导入文件
@@ -86,35 +86,37 @@ def hotfix_run(hf_settings: DiffSetting, hot_version, hot_evior,
     shutil.rmtree(last_path + '/' + zip_name)
     os.remove(origin_zip_path)
 
+    now_zip_path = last_path + '/' + zip_name + '.zip'
+    now_zip_md5 = MD5Helper.get_file_md5(now_zip_path)
+
     if current_number != 0:
-        # 获取包含py的文件夹位置
-        now_file_path = os.path.dirname(os.path.realpath(__file__))
-        # 可执行文件的拆分文件路径
-        bsdiff_path = now_file_path + '/' + 'bsdiff' + '/' + 'bsdiff'
-        if not os.path.exists(bsdiff_path):
-            os.system('cd' + ' ' + now_file_path + '/' + 'bsdiff' + ' && make')
+        # # 获取包含py的文件夹位置
+        # now_file_path = os.path.dirname(os.path.realpath(__file__))
+        if not os.path.exists(setting.bsdiff_path + '/Makefile'):
+            os.system('cd' + ' ' + setting.bsdiff_path + '/bsdiff' +
+                      ' && make')
 
         patch_path = last_path + '/' + 'patch'
         if not os.path.exists(patch_path):
             os.makedirs(patch_path)
 
-        now_zip_path = last_path + '/' + zip_name + '.zip'
-
         # 循环差量包生成制作
         for number in range(0, current_number, 1):
             print('差量包生成文件夹次数：' + str(number))
             old_zip_path = base_path + str(number) + '/' + zip_name + '.zip'
-            now_patch_path = last_path + '/patch/' + MD5Helper.get_file_md5(
-                old_zip_path) + '.patch'
-            # 差量包生成器
-            os.system(bsdiff_path + ' ' + old_zip_path + ' ' + now_zip_path +
-                      ' ' + now_patch_path)
+            old_zip_md5 = MD5Helper.get_file_md5(old_zip_path)
+            if now_zip_md5 != old_zip_md5:
+                now_patch_path = last_path + '/patch/' + old_zip_md5 + '.patch'
+                # 差量包生成器
+                os.system(setting.bsdiff_path + '/bsdiff ' + old_zip_path +
+                          ' ' + now_zip_path + ' ' + now_patch_path)
+            else:
+                print('当前%s和最新的zip包内容一样, 请确认最新包是否正确？' % (number))
     else:
         now_zip_path = base_path + '0/' + zip_name + '.zip'
 
     # oss清单文件
-    hf_settings.oss_map['bundleArchiveChecksum'] = MD5Helper.get_file_md5(
-        now_zip_path)
+    hf_settings.oss_map['bundleArchiveChecksum'] = now_zip_md5
     hf_settings.oss_map['bundleManifestChecksum'] = manifest_md5
     hf_settings.oss_map['version'] = hot_version
     update_json = last_path + '/' + hf_settings.oss_name
