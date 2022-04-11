@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2019-08-27 15:14:09
 LastEditors: Cao Shixin
-LastEditTime: 2022-04-08 10:29:37
+LastEditTime: 2022-04-11 18:31:42
 Description: 
 '''
 #压缩、解压缩 文件
@@ -16,11 +16,15 @@ class ZipUnZip:
         """
         解压缩指定文件夹
         :param input_path: zip文件路径
-        :param output_path: 解压到的父级文件夹目录
         """
-        f = zipfile.ZipFile(input_path, 'r')
-        for file in f.namelist():
-            f.extract(file, output_path)
+        zip_file = zipfile.ZipFile(input_path)
+        if os.path.isdir(output_path):
+            pass
+        else:
+            os.mkdir(output_path)
+        for names in zip_file.namelist():
+            zip_file.extract(names, output_path)
+        zip_file.close()
 
     def zip(dirpath, outFullName):
         """
@@ -28,12 +32,11 @@ class ZipUnZip:
         :param dirpath: 目标文件夹路径
         :param outFullName: 压缩文件保存路径+xxxx.zip
         """
-        zip = zipfile.ZipFile(outFullName, "w", zipfile.ZIP_DEFLATED)
-        for path, dirnames, filenames in os.walk(dirpath):
-            # 去掉目标跟路径，只对目标文件夹下边的文件及文件夹进行压缩
-            fpath = path.replace(dirpath, '')
-
+        zipf = zipfile.ZipFile(outFullName, 'w')
+        pre_len = len(os.path.dirname(dirpath))
+        for parent, dirnames, filenames in os.walk(dirpath):
             for filename in filenames:
-                zip.write(os.path.join(path, filename),
-                          os.path.join(fpath, filename))
-        zip.close()
+                pathfile = os.path.join(parent, filename)
+                arcname = pathfile[pre_len:].strip(os.path.sep)  # 相对路径
+                zipf.write(pathfile, arcname)
+        zipf.close()
