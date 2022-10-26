@@ -110,10 +110,12 @@ class Package(object):
                 else:
                     UploadIpaApk.pgyer(apk_path, description,
                                        hf_settings.PGYER_API_KEY,
-                                       hf_settings.PGYER_IPA_DOWNLOAD_URL)
+                                       hf_settings.PGYER_IPA_DOWNLOAD_URL,
+                                       False)
                     UploadIpaApk.pgyer(ipa_path, description,
                                        hf_settings.PGYER_API_KEY,
-                                       hf_settings.PGYER_IPA_DOWNLOAD_URL)
+                                       hf_settings.PGYER_IPA_DOWNLOAD_URL,
+                                       True)
         else:
             exit("\n\n===========没有找到对应的ipa和apk===========")
 

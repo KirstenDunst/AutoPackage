@@ -87,8 +87,7 @@ class AutoPackage(object):
         导出ipa包
         """
         # 导出IPA
-        print("\n\n===========开始export操作===========")
-        print("\n\n==========请你耐心等待一会~===========")
+        print("\n\n===========开始export操作，请你耐心等待一会~===========")
         start = time.time()
 
         export_command = 'xcodebuild -exportArchive -archivePath %s/archive.xcarchive -exportPath %s -exportOptionsPlist %s.plist' % (

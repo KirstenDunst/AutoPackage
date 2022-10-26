@@ -18,23 +18,38 @@ class UploadIpaApk:
     上传包处理
     """
     @staticmethod
-    def pgyer(package_path, description, api_key, pgyer_ipa_download_url):
+    def pgyer(package_path, description, api_key, pgyer_ipa_download_url,
+              isiOS: bool):
         """
         上传蒲公英
-        ：package_path：包文件路径地址（本地文件地址）
-        ：description： 本次更新描述信息
+        :package_path:包文件路径地址（本地文件地址）
+        :description: 本次更新描述信息
         """
         print("\n\n===========开始上传蒲公英操作===========")
         if package_path:
             # https://www.pgyer.com/doc/api 具体参数可以进去里面查看,
-            url = 'https://www.pgyer.com/apiv2/app/upload'
             data = {
                 '_api_key': api_key,
+                'buildType': ('ios' if (isiOS) else 'android'),
                 'buildUpdateDescription': description
             }
-            files = {'file': open(package_path, 'rb')}
-            r = requests.post(url, data=data, files=files)
-            if r.status_code == 200:
+            print(data)
+            authAsk = requests.post(
+                'https://www.pgyer.com/apiv2/app/getCOSToken', data=data)
+            response = authAsk.json()['data']
+            print(response)
+            uploadAsk = requests.post(
+                response['endpoint'],
+                data={
+                    'key':
+                    response['key'],
+                    'signature':
+                    response['params']['signature'],
+                    'x-cos-security-token':
+                    response['params']['x-cos-security-token'],
+                },
+                files={'file': open(package_path, 'rb')})
+            if uploadAsk.status_code == 204:
                 # 打开浏览器
                 webbrowser.open(pgyer_ipa_download_url, new=1, autoraise=True)
         else:
@@ -53,8 +68,8 @@ class UploadIpaApk:
             release_type=''):
         """
         上传fir
-        ：package_path：包文件路径地址（本地文件地址）
-        ：description： 本次更新描述信息
+        :package_path:包文件路径地址（本地文件地址）
+        :description: 本次更新描述信息
         """
         print(
             '\n\n===========开始上传fir操作=app_name:%s=app_version:%s=release_type:%s========'
@@ -117,9 +132,9 @@ class UploadIpaApk:
     def appstore(package_path, api_key, api_issuer):
         """
         上传appstore
-        ：package_path：包路径
+        :package_path:包路径
         api_key: 密钥id
-        api_issuer： issuer ID
+        api_issuer: issuer ID
         """
         try:
             # 验证 --verbose
@@ -143,7 +158,6 @@ if __name__ == '__main__':
     file_path = input('输入文件路径:')
     description = input('输入打包上传描述:')
     pgyer_api_key = input('蒲公英api_key:')
-    pgyer_upload_url = input('蒲公英app的下载链接地址：')
-    UploadIpaApk.pgyer(file_path, description,
-                       '023dfffebb5e4f4b7f03898cd2b0aa62',
-                       'https://www.pgyer.com/Tu0q')
+    pgyer_upload_url = input('蒲公英app的下载链接地址:')
+    UploadIpaApk.pgyer(file_path, description, pgyer_api_key, pgyer_upload_url,
+                       False)
