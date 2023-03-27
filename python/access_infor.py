@@ -2,7 +2,7 @@
 Author: Cao Shixin
 Date: 2021-06-10 13:58:14
 LastEditors: Cao Shixin
-LastEditTime: 2022-04-07 16:35:15
+LastEditTime: 2023-03-03 17:38:09
 Description: 使用信息获取
 '''
 
@@ -23,8 +23,21 @@ class AccessInformation:
             exit('输入不合法，请重新运行脚本重新开始')
 
     @staticmethod
+    def needZipCopModel():
+        '''是否需要web资源包方式'''
+        methodModel = input('是否需要web资源包方式?True?False?或输入Q退出:[T/F/Q]:')
+        if methodModel.upper() == 'T':
+            return True
+        elif methodModel.upper() == 'F':
+            return False
+        elif methodModel.upper() == 'Q':
+            exit()
+        else:
+            exit('输入不合法，请重新运行脚本重新开始')
+
+    @staticmethod
     def regular_packing():
-        platform = input('是否开启定时打包任务? T:开启，F:关闭，Q：退出？[T/F/Q]:')
+        platform = input('是否开启定时打包任务? T:开启,F:关闭,Q:退出?[T/F/Q]:')
         if platform.upper() == 'T':
             return True
         elif platform.upper() == 'F':
