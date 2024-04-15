@@ -87,6 +87,10 @@ def trans_to_const():
         if len(keys_arr) > 1:
             first_keys = list(keys_arr[0])
             lst3 = copy.deepcopy(first_keys)
+            for cell_keys in keys_arr:
+                if len(lst3) != len(cell_keys):
+                    exit('文件比中文key少,有缺少的key,请查看json文件长度后使用json_key_compare.py对比')
+                    
             for key in lst3 :
                 for other_keys in keys_arr:
                     if other_keys.__contains__(key):
