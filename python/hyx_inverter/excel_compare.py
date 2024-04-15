@@ -123,7 +123,6 @@ if  __name__ == '__main__':
                         cell_value = trans_row[pair_map[j]]
                         
                     if cell_value != '':
-                        print(key+':'+str(i+1)+'>>>'+str(j+1)+'>>>>'+column_index_map[j+1])
                         color_column_arr.append(column_index_map[j+1])
                         
                     arr.append(cell_value)
@@ -142,15 +141,16 @@ if  __name__ == '__main__':
         os.remove(save_path)
     outwb.save(save_path)
     
-    # 颜色填充
-    fill = PatternFill('solid',fgColor='FFFF00')
-    wb = load_workbook(save_path)
-    work = wb[wb.sheetnames[0]]
-    print(len(color_indexs))
-    for i in color_indexs:
-        work[i].fill = fill
-    wb.close()
-    wb.save(save_path)
+    if len(color_indexs) > 0 :
+        # 颜色填充
+        fill = PatternFill('solid',fgColor='FFFF00')
+        wb = load_workbook(save_path)
+        work = wb[wb.sheetnames[0]]
+        print(len(color_indexs))
+        for i in color_indexs:
+            work[i].fill = fill
+        wb.close()
+        wb.save(save_path)
     
     
     
