@@ -2,7 +2,7 @@ import json
 import os
 import re
 
-from locales_tool import Tool, trans_to_const
+from locales_tool import trans_to_const
 
 def search_keyword_in_file(file_path:str, keyword:str, near_local_json_path:str):
     """Search for a keyword in a file."""
@@ -105,6 +105,8 @@ def removeLocalesKeys(unUsedKeys:list,locals_dir:str):
 if __name__ == "__main__":
     # root_path = os.path.abspath(os.path.dirname(__file__)+os.path.sep+"..")
     root_path = input('请输入项目根目录文件地址:')
+    root_path = root_path.removeprefix("'")
+    root_path = root_path.removesuffix("'")
     locales_file_path = root_path + '/assets/locales/zh_CN.json'
     locals_dir = root_path + '/assets/locales/'
     near_local_json_path = root_path+'/assets/json/debug.json'
