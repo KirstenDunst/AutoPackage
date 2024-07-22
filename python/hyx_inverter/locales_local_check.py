@@ -27,8 +27,18 @@ def search_keyword_in_file(file_path:str, keyword:str, near_local_json_path:str)
             # 过滤掉近端本地debug.json里面的国际化字段
             with open(near_local_json_path, 'r', encoding='utf-8') as file:
                 for line in file:
-                    if keyword in line:
+                    if "\""+key_clear+"\"" in line:
                         return True
+            # 过滤掉近端历史字符串写入key获取
+            if file_path.__contains__('/near/'):
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    for line in file:
+                        if "'"+key_clear+"'" in line:
+                            return True
+                        if "\""+key_clear+"\"" in line:
+                            return True
+        
+        
                     
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
