@@ -38,7 +38,8 @@ if __name__ == '__main__':
     for k, v in trans_dict['zh_CN'].items():
         a_list = [v]
         for language_code in language_code_arr[1:]:
-            a_list.append(trans_dict[language_code][k])
+            if language_code in trans_dict.keys():
+                a_list.append(trans_dict[language_code][k])
         outws.append(a_list)       
             
     if os.path.exists(out_excel_file):
