@@ -100,8 +100,9 @@ if __name__ == '__main__':
     miss_file_parent_path = miss_file_parent_path.removesuffix("'")
     
     # 存放生成
-    root_path = os.path.abspath(os.path.dirname(__file__)+os.path.sep+"..")
-    source_dir = root_path + '/assets/locales/'
+    # root_path = os.path.abspath(os.path.dirname(__file__)+os.path.sep+"..")
+    # source_dir = root_path + '/assets/locales/'
+    source_dir = os.path.dirname(chinese_locale_file)+'/'
     # 打开文件
     workbook = load_workbook(excel_file_path)
     # 获取所有工作表名称
