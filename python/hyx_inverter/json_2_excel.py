@@ -28,8 +28,8 @@ if __name__ == '__main__':
             json_content:dict = json.loads(content)
             trans_dict[splits[0]] = ExcelTool.transToDirectDict(json_content,'')
     
-    excel_title = ['中文','英语','德语','西班牙语','法语','葡萄牙语','意大利语','波兰语','荷兰语','日语']
-    language_code_arr = ['zh_CN', 'en_US','de_DE','es_ES','fr_FR','pt_PT','it_IT','pl_PL','nl_NL','ja_JP']
+    excel_title = ['中文','英语','德语','西班牙语','法语','葡萄牙语','意大利语','波兰语','荷兰语','日语','罗马尼亚语']
+    language_code_arr = ['zh_CN', 'en_US','de_DE','es_ES','fr_FR','pt_PT','it_IT','pl_PL','nl_NL','ja_JP','ro_RO']
     
     outwb = Workbook()
     outws = outwb.worksheets[0] 
