@@ -39,7 +39,7 @@ if __name__ == "__main__":
         cell_dict = {"remark": ""}
         local_dict = {}
         for lk, lv in language_locales.items():
-            local_dict[lk] = lv[k] +'12'
+            local_dict[lk] = lv[k]
         cell_dict["local"] = local_dict
         save_dict[k] = cell_dict
 
