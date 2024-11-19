@@ -20,7 +20,7 @@ python3 scripts/asset_tool.py
 ```
 <br><br>
 
-## locales_tool.py
+# locales_tool.py
 
 功能介绍: 便于执行将assets/locales/下的国际化字段转化为项目里面使用的静态字符常量文件：lib/generated/locales.g.dart(这个文件每次运行脚本会覆盖，所以不要在里面手动编辑，避免丢失)<br><br>
 
@@ -47,16 +47,25 @@ Alert:执行期间如果遇到本地已存在对应国际化的json文件，会�
 
 # locales_add.py
 核心翻译使用DeepLX：https://github.com/OwO-Network/DeepLX (DeepL api：https://www.deepl.com/需要注册绑定信用卡，暂时不支持中国信用卡，且有50万字符每月的限制),使用的时候由于api防止恶意访问有限制，如果批量请求会被限制ip的访问。所采用使用安装软件的方式，请求走本地软件的请求绕开直接的访问的问题。可解决。所以前置条件需要参照链接安装一下软件，然后脚本才有效。
+```pip install requests pandas```
 
 功能介绍：开发的时候新增国际化的工具，执行的时候会在assets/locales/下生成一个todo.json将需要新增的中文对应的json结构放置在里面，在终端输入c回车，开始执行。<br>
 执行完之后可直接在项目里面使用LocaleKeys.对应的key.tr使用（这个脚本附带了locales_tool.py的执行）<br><br>
 
 Alert:
+support language: https://developers.deepl.com/docs/v/zh/resources/supported-languages
+
 执行过程中有中文提示：
 Result:*-->*:*表示打印出当前翻译的内容翻译成(-->)什么语言：接口响应的内容(gpt接口响应可能会有一些特殊字符之类的，可以主观鉴别一下)<br>
 Error:****表示那句中文翻译成什么语言出错。需要手动在对应语言json文件中将对应value用其他语言翻译好之后替换，全部替换完成之后再手动执行locales_tool.py脚本，生成对应的字符常量key，让后再项目里面LocaleKeys.对应的key.tr使用<br><br>
 
-## json_key_compare.py
+# locales_delete.py
+功能介绍：删除国际化key,多个key之间用英文逗号隔开（key为复合key，比如多级json即使用大驼峰拼接后的key）
+
+# json_2_locales.py
+功能介绍：用于发布前将线上平台运维国际化覆盖本地国际化文件
+
+# json_key_compare.py
 功能介绍: 用于比对两个json文件的key是否有特殊key的存在<br><br>
 
 使用介绍：（安装python环境）<br>
