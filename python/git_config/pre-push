@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+if [[ $(git status --porcelain) ]]; then
+  printf "\e[31;1m%s\e[0m\n" 'This script needs to run against committed code only. Please commit or stash your changes.'
+  exit 1
+fi
+
+PROJECT_DIR="hyx_inverter"
+
+# 定义 Flutter 命令
+FLUTTER_CMD="flutter"
+
+
+if [ -d "$PROJECT_DIR/.fvm" ]; then
+  FLUTTER_CMD="fvm flutter"
+fi
+
+printf "\e[33;1m%s\e[0m\n" 'Running the Flutter analyzer'
+cd "$PROJECT_DIR" || exit 1
+
+$FLUTTER_CMD analyze
+if [ $? -ne 0 ]; then
+  printf "\e[31;1m%s\e[0m\n" 'Flutter analyzer error'
+  exit 1
+fi
+
+printf "\e[33;1m%s\e[0m\n" 'Finished running the Flutter analyzer'
+printf "\e[33;1m%s\e[0m\n" 'Running unit tests'
+
+$FLUTTER_CMD test
+if [ $? -ne 0 ]; then
+  printf "\e[31;1m%s\e[0m\n" 'Unit tests error'
+  exit 1
+fi
+printf "\e[33;1m%s\e[0m\n" 'Finished running unit tests'

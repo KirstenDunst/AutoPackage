@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+printf "\e[33;1m%s\e[0m\n" 'Running the dart formatter'
+# cd hyx_inverter
+# dart format .
+
+# 获取仓库根目录路径
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+formart_path="${ROOT_DIR}/hyx_inverter/scripts/format_edit_dart_file.py"
+printf "$formart_path"
+chmod +x $formart_path
+
+python3 $formart_path
+CODE=$?
+echo "退出码：$CODE"
+
+printf "\e[33;1m%s\e[0m\n" 'Finished running the dart formatter'
+
+# 1 表示失败，0 表示成功
+if [ $CODE -ne 0 ]; then
+  echo "检测到结果有改动文件format 终止commit, 请查看之后重新commit"
+  exit 1
+fi

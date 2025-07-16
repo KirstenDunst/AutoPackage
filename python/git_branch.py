@@ -115,3 +115,36 @@ class GitBranch(object):
             branch_local_list.append(branch.lstrip('* '))
             # 使用str的lstrip方法将字符串的前的空格和当前branch前的“*”标记去除
         return branch_local_list
+    
+    # 获取当前分支名称
+    def get_current_branch():
+        result = subprocess.run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'],
+                                stdout=subprocess.PIPE, text=True)
+        return result.stdout.strip()
+
+    # 核对分支是否在远端存在
+    def check_remote_branch_exists(branch):
+        result = subprocess.run(['git', 'ls-remote', '--heads', 'origin', branch],
+                                stdout=subprocess.PIPE, text=True)
+        return bool(result.stdout.strip())
+
+    # 获取分支未提交的commit hash数组
+    def get_unpushed_commits(branch):
+        result = subprocess.run(['git', 'log', f'origin/{branch}..{branch}', '--pretty=format:%H'],
+                                stdout=subprocess.PIPE, text=True)
+        commits = result.stdout.strip().split('\n') if result.stdout.strip() else []
+        return commits
+
+    # 获取分支最近几次的commit hash数组
+    def get_recent_commits(n):
+        result = subprocess.run(['git', 'log', f'-n {n}', '--pretty=format:%H'],
+                                stdout=subprocess.PIPE, text=True)
+        commits = result.stdout.strip().split('\n') if result.stdout.strip() else []
+        return commits
+
+    # 获取commit中改动的文件名称数组
+    def get_files_in_commit(commit_hash):
+        result = subprocess.run(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_hash],
+                                stdout=subprocess.PIPE, text=True)
+        files = result.stdout.strip().split('\n') if result.stdout.strip() else []
+        return files
