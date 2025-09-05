@@ -164,7 +164,8 @@ if __name__ == "__main__":
             a_list = [v]
             for name in titles[1:]:
                 dic = compare_file_map[name]
-                a_list.append(dic[k])
+                if k in dic:
+                    a_list.append(dic[k])
             outws.append(a_list)
         save_path = miss_file_parent_path + "/miss_transform.xlsx"
         if os.path.exists(save_path):
