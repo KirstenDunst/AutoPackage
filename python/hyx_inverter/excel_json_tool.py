@@ -24,7 +24,7 @@ class ExcelTool:
                         newDict[k] = ""
                 else:
                     newDict[k] = ""
-        return newDict
+        return newDict                
 
     # 对比json，将主json对应value为''的辅json结构保存下来返回
     @staticmethod
@@ -37,7 +37,7 @@ class ExcelTool:
             else:
                 if v == "":
                     newDict[k] = subDict[k]
-                    print(subDict[k])
+                    # print(subDict[k])
         return newDict
 
     # 合并json, 新产生的空数据不合并, 否则同样的key，使用新json的value做value
@@ -94,8 +94,7 @@ if __name__ == "__main__":
     miss_file_parent_path = miss_file_parent_path.removesuffix("'")
 
     # 存放生成
-    root_path = os.path.abspath(os.path.dirname(__file__) + os.path.sep + "..")
-    source_dir = root_path + "/assets/locales/"
+    source_dir = os.path.dirname(chinese_locale_file) + "/"
     # 打开文件
     workbook = load_workbook(excel_file_path)
     # 获取所有工作表名称
