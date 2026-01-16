@@ -39,6 +39,8 @@ if __name__ == "__main__":
         "荷兰语",
         "日语",
         "罗马尼亚语",
+        "土耳其语",
+        "阿拉伯语",
     ]
     language_code_arr = [
         "zh_CN",
@@ -52,6 +54,8 @@ if __name__ == "__main__":
         "nl_NL",
         "ja_JP",
         "ro_RO",
+        "tr_TR",
+        "ar_SA",
     ]
 
     outwb = Workbook()
@@ -61,7 +65,7 @@ if __name__ == "__main__":
     for k, v in trans_dict["zh_CN"].items():
         a_list = [v]
         for language_code in language_code_arr[1:]:
-            a_list.append(trans_dict[language_code][k])
+            a_list.append(trans_dict[language_code][k] if k in trans_dict[language_code] else '')
         outws.append(a_list)
 
     if os.path.exists(out_excel_file):
