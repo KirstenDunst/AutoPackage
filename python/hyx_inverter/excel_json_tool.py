@@ -86,7 +86,7 @@ if __name__ == "__main__":
     chinese_locale_file = chinese_locale_file.removeprefix("'")
     chinese_locale_file = chinese_locale_file.removesuffix("'")
     locales_names = input(
-        "将需要转化对应的列与对应的json命名(多个用,隔开)下标从0开始:(eg: 1:en_US,0:zh_CN):"
+        "将需要转化对应的列与对应的json命名(多个用,隔开)下标从0开始:(eg: 1:en_US,0:zh_CN) ✨注意列的折叠，不要取错列数✨:"
     )
     # 1:en_US,2:de_DE,3:es_ES,4:fr_FR,5:pt_PT,6:it_IT,7:pl_PL,8:ja_JP,9:nl_NL
     miss_file_parent_path = input("缺失翻译的文件整理存放父级文件夹目录:")
