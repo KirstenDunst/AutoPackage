@@ -3,26 +3,27 @@
 import json
 import os
 
+from locales_tool import trans_to_const
+
 
 def check_remove_key(json_content: dict, remove_key: str) -> dict:
     newDict = {}
-    new_remove_key = remove_key.lower()
+    new_remove_key = remove_key
     for k, v in json_content.items():
-        k_lower = k.lower()
         if str(v.__class__).__contains__("dict"):
-            if new_remove_key.startswith(k_lower):
-                dealDict = check_remove_key(v, new_remove_key.removeprefix(k_lower))
+            k_compare = k + "."
+            if new_remove_key.startswith(k_compare):
+                dealDict = check_remove_key(v, new_remove_key.removeprefix(k_compare))
                 newDict.update({k: dealDict})
             else:
                 newDict.update({k: v})
         else:
-            if k_lower != new_remove_key:
+            if k != new_remove_key:
                 newDict[k] = v
     return newDict
 
 
-if __name__ == "__main__":
-    keys = input("输入需要删除的国际化key,多个之间用英文逗号隔开:")
+def locales_delete(keys: str):
     locale_keys = keys.split(",")
 
     if len(locale_keys) == 0:
@@ -52,3 +53,9 @@ if __name__ == "__main__":
                 continue
         else:
             continue
+        
+    trans_to_const()         
+    
+if __name__ == "__main__":
+    keys = input("输入需要删除的国际化key,多个之间用英文逗号隔开:")
+    locales_delete(keys)
