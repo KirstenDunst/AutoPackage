@@ -41,6 +41,7 @@ if __name__ == "__main__":
         "罗马尼亚语",
         "土耳其语",
         "阿拉伯语",
+        "越南语",
     ]
     language_code_arr = [
         "zh_CN",
@@ -56,6 +57,7 @@ if __name__ == "__main__":
         "ro_RO",
         "tr_TR",
         "ar_SA",
+        "vi_VN",
     ]
 
     outwb = Workbook()
