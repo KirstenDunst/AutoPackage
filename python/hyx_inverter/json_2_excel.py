@@ -28,6 +28,7 @@ if __name__ == "__main__":
             trans_dict[splits[0]] = CommonTool.tranformDict(json_content, "")
 
     excel_title = [
+        "KEY",
         "中文",
         "英语",
         "德语",
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     outws.append(excel_title)
 
     for k, v in trans_dict["zh_CN"].items():
-        a_list = [v]
+        a_list = [k,v]
         for language_code in language_code_arr[1:]:
             a_list.append(trans_dict[language_code][k] if k in trans_dict[language_code] else '')
         outws.append(a_list)

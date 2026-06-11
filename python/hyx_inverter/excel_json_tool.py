@@ -9,15 +9,18 @@ from common_tool import CommonTool
 class ExcelTool:
     # 转换
     @staticmethod
-    def trDict(sourceDict: dict, cloumnIndex: int, dataMap: dict):
+    def trDict(sourceDict: dict, cloumnIndex: int, dataMap: dict, subKey=""):
         newDict = {}
         for k, v in sourceDict.items():
             if str(v.__class__).__contains__("dict"):
-                dealDict = ExcelTool.trDict(v, cloumnIndex, dataMap)
+                dealDict = ExcelTool.trDict(v, cloumnIndex, dataMap,subKey=k)
                 newDict.update({k: dealDict})
             else:
-                if dataMap.keys().__contains__(v):
-                    values: list[str] = dataMap[v]
+                nowKey = k
+                if subKey != "":
+                    nowKey = subKey + "." + k
+                if dataMap.keys().__contains__(nowKey):
+                    values: list[str] = dataMap[nowKey]
                     if len(values) >= cloumnIndex:
                         newDict[k] = values[cloumnIndex - 1]
                     else:
@@ -86,9 +89,9 @@ if __name__ == "__main__":
     chinese_locale_file = chinese_locale_file.removeprefix("'")
     chinese_locale_file = chinese_locale_file.removesuffix("'")
     locales_names = input(
-        "将需要转化对应的列与对应的json命名(多个用,隔开)下标从0开始:(eg: 1:en_US,0:zh_CN) ✨注意列的折叠，不要取错列数✨:"
+        "将需要转化对应的列与对应的json命名(多个用,隔开)下标从0开始:(eg: 2:en_US,1:zh_CN) ✨注意列的折叠，不要取错列数✨:"
     )
-    # 1:en_US,2:de_DE,3:es_ES,4:fr_FR,5:pt_PT,6:it_IT,7:pl_PL,8:ja_JP,9:nl_NL
+    # 2:en_US,3:de_DE,4:es_ES,5:fr_FR,6:pt_PT,7:it_IT,8:pl_PL,9:ja_JP,10:nl_NL
     miss_file_parent_path = input("缺失翻译的文件整理存放父级文件夹目录:")
     miss_file_parent_path = miss_file_parent_path.removeprefix("'")
     miss_file_parent_path = miss_file_parent_path.removesuffix("'")
