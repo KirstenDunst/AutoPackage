@@ -27,23 +27,42 @@ if __name__ == "__main__":
             json_content: dict = json.loads(content)
             trans_dict[splits[0]] = CommonTool.tranformDict(json_content, "")
 
+    # excel_title = [
+    #     "KEY",
+    #     "中文",
+    #     "英语",
+    #     "德语",
+    #     "西班牙语",
+    #     "法语",
+    #     "葡萄牙语",
+    #     "意大利语",
+    #     "波兰语",
+    #     "荷兰语",
+    #     "日语",
+    #     "罗马尼亚语",
+    #     "土耳其语",
+    #     "阿拉伯语",
+    #     "越南语",
+    #     "印尼语",
+    # ]
     excel_title = [
-        "KEY",
-        "中文",
-        "英语",
-        "德语",
-        "西班牙语",
-        "法语",
-        "葡萄牙语",
-        "意大利语",
-        "波兰语",
-        "荷兰语",
-        "日语",
-        "罗马尼亚语",
-        "土耳其语",
-        "阿拉伯语",
-        "越南语",
-    ]
+            "KEY",
+            "中文",
+            "English",
+            "Deutsch",
+            "Español",
+            "Français",
+            "Português",
+            "Italiano",
+            "Polski",
+            "Nederlands",
+            "日本語",
+            "Română",
+            "Türkçe",
+            "العربية",
+            "Tiếng Việt",
+            "Bahasa Indonesia",
+        ]
     language_code_arr = [
         "zh_CN",
         "en_US",
@@ -59,6 +78,7 @@ if __name__ == "__main__":
         "tr_TR",
         "ar_SA",
         "vi_VN",
+        "id_ID",
     ]
 
     outwb = Workbook()
