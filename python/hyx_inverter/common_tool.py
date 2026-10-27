@@ -14,3 +14,23 @@ class CommonTool:
             else:
                 newDict[nowKey] = v
         return newDict
+
+    @staticmethod
+    def getLocalDict() -> dict:
+        return {
+            "de": "de_DE",
+            "en": "en_US",
+            "es": "es_ES",
+            "fr": "fr_FR",
+            "it": "it_IT",
+            "pl": "pl_PL",
+            "pt": "pt_PT",
+            "zh": "zh_CN",
+            "nl": "nl_NL",
+            "ja": "ja_JP",
+            "ro": "ro_RO",
+            "tr": "tr_TR",
+            "ar": "ar_SA",
+            "vi": "vi_VN",
+            "id": "id_ID",
+        }

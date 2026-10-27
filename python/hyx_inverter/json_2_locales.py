@@ -4,6 +4,7 @@ import json
 import os
 
 from locales_tool import trans_to_const
+from common_tool import CommonTool
 
 
 def recursive_replace(flat_key: str, value, nested_obj: dict):
@@ -29,21 +30,6 @@ if __name__ == "__main__":
     remote_json_path = input("输入云端下载将要覆盖项目国际化文件地址:")
     remote_json_path = remote_json_path.removeprefix("'")
     remote_json_path = remote_json_path.removesuffix("'")
-
-    # 中转map
-    languageTransMap = {
-        "de": "de_DE",
-        "en": "en_US",
-        "es": "es_ES",
-        "fr": "fr_FR",
-        "it": "it_IT",
-        "ja": "ja_JP",
-        "nl": "nl_NL",
-        "pl": "pl_PL",
-        "pt": "pt_PT",
-        "ro": "ro_RO",
-        "zh": "zh_CN",
-    }
 
     with open(remote_json_path, "r") as f:
         remote_json_content = f.read()
@@ -73,7 +59,8 @@ if __name__ == "__main__":
         for lk, lv in language_locales.items():
             if lk in local_map:
                 recursive_replace(k,local_map[lk],lv)
-    
+                
+    languageTransMap = CommonTool.getLocalDict()
     for ek,ev in language_locales.items():
         local_file_name = languageTransMap[ek]
         file_path = os.path.join(locales_dir, local_file_name + ".json")
